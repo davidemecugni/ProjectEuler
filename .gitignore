@@ -26,6 +26,11 @@
 *.la
 *.lo
 
+# Project files
+*.sln
+*.vcxproj
+*.vcxproj.filters
+
 # Shared objects (inc. Windows DLLs)
 *.dll
 *.so
