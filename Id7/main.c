@@ -3,10 +3,13 @@
 #include <stdbool.h>
 //Returns the nth prime, not the fastest algo
 bool IsPrime(uint64_t n) {
+	if (n == 0 || n == 1) {
+		return false;
+	}
 	if (n == 2 || n == 3) {
 		return true;
 	}
-	for (uint64_t i = 2; i <= n / 2 ; i++) {
+	for (uint64_t i = 2; i <= n / 2; i++) {
 		if (n % i == 0) {
 			return false;
 		}

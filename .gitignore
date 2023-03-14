@@ -459,7 +459,7 @@ FodyWeavers.xsd
 
 # End of https://www.toptal.com/developers/gitignore/api/visualstudio,c
 
-### HTML, CSS and PDF files ###
+### Various files ###
 
 *.html
 *.css
@@ -467,4 +467,5 @@ FodyWeavers.xsd
 *_files/**
 *.png
 *.download
+*.json
 js
