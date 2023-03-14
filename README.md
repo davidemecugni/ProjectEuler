@@ -9,16 +9,25 @@ A quick implementation could be:
 #include <stdio.h>
 #include <stdint.h>
 #include <stdbool.h>
-//Returns the nth prime, not the fastest algo
 bool IsPrime(uint64_t n) {
-	if (n == 0 || n == 1){
+	//Optimised version
+	
+	//Excluded cases
+	if (n == 0 || n == 1) {
 		return false;
 	}
-	if (n == 2 || n == 3) {
+	//Low primes
+	if (n == 2 || n == 3 || n == 5) {
 		return true;
 	}
-	for (uint64_t i = 2; i <= n / 2 ; i++) {
-		if (n % i == 0) {
+	
+	if (n % 2 == 0 || n % 3 == 0 || n % 5 == 0) {
+		return false;
+	}
+	//Every new prime number must be before or after 6
+	//This is because every multiple of 2 or 3 is not a prime
+	for (uint64_t i = 6; (i-1)*(i-1) <= n ; i+=6) {
+		if (n % (i-1) == 0 || n % (i+1)==0) {
 			return false;
 		}
 	}
