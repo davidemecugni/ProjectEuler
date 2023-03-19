@@ -1,14 +1,59 @@
 #include <stdio.h>
 #include <stdbool.h>
+#include <stdlib.h>
+#include <string.h>
+//Recursive template of the function
+//Data is the triangle, rows are the levels of the piramid, path is the current path(0 for same col, 1 to go right), i is the current level
+//cnt is the current sum, col is the current col, max is the best sum found, best path is the best path found, tot is the number of iterations
+void FindPathRec(short data[15][15], size_t rows, bool* path, int i, int cnt, int col, unsigned* max, bool* best_path, int *tot) {
+	//If we reach the end of the tree("leaves") or if the current branch is surely worst than
+	//The best
+	if ( i == rows || (rows - i) *99 + cnt < *max) {
+		//If the solution found is better than the best one found before
+		if (cnt > *max) {
+			*max = cnt;
+			memcpy(best_path, path, sizeof(bool) * rows);
 
-int max(int a, int b) {
-	return (a > b ?  a : b);
+		}
+		*tot += 1;
+		return;
+	}
+	//If the subset is correctecly formed
+	//The subset is of dim k
+
+	//Case path following the same col
+	path[i] = 0;
+	FindPathRec(data, rows, path, i + 1, cnt + data[i][col], col, max, best_path, tot);
+	//Case path following the same col to the right
+	path[i] = 1;
+	FindPathRec(data, rows, path, i + 1, cnt + data[i][col], col +1, max, best_path, tot);
 }
+//Non-recursive template of the function
+int FindPath(short data[15][15], size_t rows, bool* best_path) {
+	unsigned max = 0;
+	int tot = 0;
+	bool* path = calloc(rows , sizeof(bool)); //0 for same col, 1 to go right
+	FindPathRec(data, rows, path, 0, 0, 0, &max, best_path, &tot);
+	free(path);
+	printf("Tot: %d\n", tot);
+	return max;
+}
+void PrintPath(short data[15][15], bool* path, int rows) {
+	int col = 0;
+	printf("%hu", data[0][0]);
+	for (int i = 0; i < rows -1 ; i++) {
+		if (path[i]) {
+			++col;
+		}
+		printf(" -> %hu", data[i+1][col]);
 
-
+	}
+	for (int i = 0; i < 15; i++) {
+		printf("%d ", path[i]);
+	}
+}
 int main(void) {
-	int total[15] = { 0 };
-	int data[15][15] = {
+	short data[15][15] = {
 	{ 75},
 	{ 95, 64},
 	{ 17, 47, 82},
@@ -25,5 +70,9 @@ int main(void) {
 	{ 63, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31},
 	{ 04, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 04, 23}};
 	//Has to be implemented with a backtracking algo
+	bool* best_path = calloc(15, sizeof(bool)); //0 for same col, 1 to go right
+	printf("Max = %d\n", FindPath(data, 15, best_path));
+	PrintPath(data, best_path, 15);
+	free(best_path);
 	return 0;
 }
