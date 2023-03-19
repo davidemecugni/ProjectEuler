@@ -1,5 +1,6 @@
 import math
-
+#Find the sum of amicable numbers under 10000
+#An amicable number is 220 bc SumDivisors(220)=286 and SumDivisors(286)=220
 #Sum of the divisors of a given number without itself
 #Ex. 10 -> 1 + 2 + 5 = 8
 def SumDivisors(n):
