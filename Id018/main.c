@@ -8,7 +8,8 @@
 void FindPathRec(short data[15][15], size_t rows, bool* path, int i, int cnt, int col, unsigned* max, bool* best_path, int *tot) {
 	//If we reach the end of the tree("leaves") or if the current branch is surely worst than
 	//The best
-	if ( i == rows || (rows - i) *99 + cnt < *max) {
+	if ( i == rows - 1|| (rows - i) *99 + cnt < *max) {
+		cnt += data[i][col];
 		//If the solution found is better than the best one found before
 		if (cnt > *max) {
 			*max = cnt;
@@ -32,10 +33,10 @@ void FindPathRec(short data[15][15], size_t rows, bool* path, int i, int cnt, in
 int FindPath(short data[15][15], size_t rows, bool* best_path) {
 	unsigned max = 0;
 	int tot = 0;
-	bool* path = calloc(rows , sizeof(bool)); //0 for same col, 1 to go right
+	bool* path = calloc(rows -1 , sizeof(bool)); //0 for same col, 1 to go right
 	FindPathRec(data, rows, path, 0, 0, 0, &max, best_path, &tot);
 	free(path);
-	printf("Tot: %d\n", tot);
+	printf("Total path considered: %d\n", tot);
 	return max;
 }
 void PrintPath(short data[15][15], bool* path, int rows) {
@@ -48,7 +49,8 @@ void PrintPath(short data[15][15], bool* path, int rows) {
 		printf(" -> %hu", data[i+1][col]);
 
 	}
-	for (int i = 0; i < 15; i++) {
+	printf("\nChoices(0 same col, 1 to the right: ");
+	for (int i = 0; i < 14; i++) {
 		printf("%d ", path[i]);
 	}
 }
@@ -70,7 +72,7 @@ int main(void) {
 	{ 63, 66, 04, 68, 89, 53, 67, 30, 73, 16, 69, 87, 40, 31},
 	{ 04, 62, 98, 27, 23, 9, 70, 98, 73, 93, 38, 53, 60, 04, 23}};
 	//Has to be implemented with a backtracking algo
-	bool* best_path = calloc(15, sizeof(bool)); //0 for same col, 1 to go right
+	bool* best_path = calloc(14, sizeof(bool)); //0 for same col, 1 to go right
 	printf("Max = %d\n", FindPath(data, 15, best_path));
 	PrintPath(data, best_path, 15);
 	free(best_path);
