@@ -20,4 +20,4 @@ for i in range(1,10000):
 print(f"The total is: {total}")
 end = time()
 
-print(f"Average code execution time: {((end - start)/100):.5f}")
+print(f"Code execution time: {((end - start)/100):.5f}")
